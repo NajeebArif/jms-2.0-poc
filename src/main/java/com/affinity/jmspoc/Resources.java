@@ -31,6 +31,10 @@ import javax.jms.JMSDestinationDefinitions;
 )
 public class Resources {
 
+//    public static final String REQUEST_QUEUE = "java:global/weblogic/examples/jms/servletQueue";
+//    public static final String CONNECTION_FACTORY = "java:global/weblogic/examples/jms/servletXAConnectionFactory";
+//
+//    public static final String REQUEST_TOPIC = "java:global/weblogic/examples/jms/servletTopic";
     public static final String REQUEST_QUEUE = "java:app/weblogic/examples/jms/servletQueue";
     public static final String CONNECTION_FACTORY = "java:app/weblogic/examples/jms/servletXAConnectionFactory";
 

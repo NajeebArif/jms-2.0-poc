@@ -4,6 +4,7 @@ import com.affinity.jmspoc.Resources;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
@@ -29,6 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 public class TestServlet extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(TestServlet.class.getName());
+    
+    @Inject
+    private RepoClass repo;
 
     @Resource(mappedName = Resources.REQUEST_QUEUE)
     private Queue queue;
@@ -40,7 +44,7 @@ public class TestServlet extends HttpServlet {
     @JMSConnectionFactory(Resources.CONNECTION_FACTORY)
     private JMSContext context;
 
-    public void sendMessage() {
+    public void sendMessage(String serverName) {
         if (context == null) {
             LOG.severe("*****************************JMS Context is null.****************************");
         } else {
@@ -48,14 +52,14 @@ public class TestServlet extends HttpServlet {
             if (queue == null) {
                 LOG.severe("******************************QUEUE is null.************************************");
             } else {
-                producer.send(queue, "This is a string message");
+                producer.send(queue, "This is a string message from "+serverName);
             }
         }
     }
     
-    public void pulbishMessage(){
+    public void pulbishMessage(String serverName){
         JMSProducer producer = context.createProducer();
-        producer.send(topic, "PUBLISHED MESSAGE FROM CLASS: "+this.getClass().getName());
+        producer.send(topic, "PUBLISHED MESSAGE FROM CLASS: "+this.getClass().getName()+" from Server "+serverName);
         
     }
 
@@ -71,8 +75,14 @@ public class TestServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
         PrintWriter writer = res.getWriter();
-        sendMessage();
-        pulbishMessage();
-        writer.write("Hello World!! Messages have been sent. Please check the weblogic console.");
+        String serverName = System.getProperty("weblogic.Name");
+
+        sendMessage(serverName);
+        pulbishMessage(serverName);
+        writer.write("Hello World from "+serverName+"!! Messages have been sent. Please check the weblogic console.");
+        if(repo.getMessage()!=null&&!repo.getMessage().isEmpty())
+        writer.write("\nPrevious Mesgs are: \n"+repo.getMessage().stream().collect(Collectors.joining(" <EOM> ; ")));  
+        else
+            writer.write("No messages yet.");
     }
 }
