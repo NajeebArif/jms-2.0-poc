@@ -11,3 +11,6 @@ This example demonstrates the following key features:
 The application is packaged as a simple war and was tested on Welogic 12.2.1.
 
 This application can also be treated as an example for using CDI in a war (beans.xml in WEB-INF)
+
+### The loadBalancer
+This app is used to load balance the inbound traffic to weblogic server to multiple weblogic clusters in Round Robin fashion.
