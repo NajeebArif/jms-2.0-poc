@@ -1,16 +1,18 @@
 # jms-2.0-poc
-This application an poc for JMS-2.0 which uses annotations to define and use JMS modules.
+This application an poc for <b><i><u>JMS-2.0</u></i></b> which uses annotations to define and use JMS modules.
 
-This example demonstrates the following key features:
+This example demonstrates use of the following key JMS annotations:
 
-@JMSDestinationDefinitions
-@JMSDestinationDefinition      // and how to create both Queue and Topics and
-@JMSConnectionFactoryDefinition
-@JMSConnectionFactory
+<ul>
+  <li><i><b>@JMSDestinationDefinitions</b></i></li>
+  <li><i><b>@JMSDestinationDefinition</b></i></li>
+  <li><i><b>@JMSConnectionFactoryDefinition</b></i></li>
+  <li><i><b>@JMSConnectionFactory</b></i></li>
+</ul>
 
-The application is packaged as a simple war and was tested on Welogic 12.2.1.
+The application is packaged as a simple <i>war</i> and was tested on <b>Welogic 12.2.1</b>.
 
-This application can also be treated as an example for using CDI in a war (beans.xml in WEB-INF)
+This application can also be treated as an example for using <b>CDI</b> in a war (beans.xml in WEB-INF)
 
 ### The loadBalancer
-This app is used to load balance the inbound traffic to weblogic server to multiple weblogic clusters in Round Robin fashion.
+This app is used to <i>load balance</i> the inbound traffic for weblogic server to multiple weblogic managed servers in a cluster in Round Robin fashion.
